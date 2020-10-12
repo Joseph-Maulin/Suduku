@@ -4,6 +4,7 @@ import sys
 class sudoku_solver:
     def __init__(self, puzzle):
         self.cell_cache = {}
+        self.init_values = {}
         self.puzzle = puzzle
         self.puzzle_array = None
         self.keys = []
@@ -57,12 +58,19 @@ class sudoku_solver:
                 col = self.keys[place] % 9
                 self.puzzle_array[row][col] = 0
 
-        # set solution
-        self.solution = self.puzzle_array.copy()
+        self.set_solution()
 
         # print solution
-        for line in self.solution:
+        for line in self.puzzle_array:
             print(line)
+
+
+    def set_solution(self):
+        self.solution = {}
+        for x in range(81):
+            row = x // 9
+            col = x % 9
+            self.solution[x] = self.puzzle_array[row][col]
 
 
 
@@ -83,6 +91,7 @@ class sudoku_solver:
         col = cell % 9
 
         if self.puzzle_array[row][col] != 0:
+            self.init_values[cell] = self.puzzle_array[row][col]
             return []
 
         for i in range(9):
@@ -121,30 +130,35 @@ class sudoku_solver:
         return nums
 
 
-p="""
-000100502
-000090000
-098500070
-000061000
-005000040
-920050030
-000704008
-000000709
-350000006
-"""
-# a = [[5, 3, 4, 6, 7, 8, 9, 1, 2],
-# [6, 7, 2, 1, 9, 5, 3, 4, 8],
-# [1, 9, 8, 3, 4, 2, 5, 6, 7],
-# [8, 1, 9, 7, 6, 4, 0, 0, 3],
-# [4, 0, 0, 8, 0, 3, 0, 0, 1],
-# [7, 0, 0, 0, 2, 0, 0, 0, 6],
-# [0, 6, 0, 0, 0, 0, 2, 8, 0],
-# [0, 0, 0, 4, 1, 9, 0, 0, 5],
-# [0, 0, 0, 0, 8, 0, 0, 7, 9]]
+if __name__ == "__main__":
+    p="""
+    000100502
+    000090000
+    098500070
+    000061000
+    005000040
+    920050030
+    000704008
+    000000709
+    350000006
+    """
+    # a = [[5, 3, 4, 6, 7, 8, 9, 1, 2],
+    # [6, 7, 2, 1, 9, 5, 3, 4, 8],
+    # [1, 9, 8, 3, 4, 2, 5, 6, 7],
+    # [8, 1, 9, 7, 6, 4, 0, 0, 3],
+    # [4, 0, 0, 8, 0, 3, 0, 0, 1],
+    # [7, 0, 0, 0, 2, 0, 0, 0, 6],
+    # [0, 6, 0, 0, 0, 0, 2, 8, 0],
+    # [0, 0, 0, 4, 1, 9, 0, 0, 5],
+    # [0, 0, 0, 0, 8, 0, 0, 7, 9]]
 
 
 
-solver = s(p)
-# solver.puzzle_array = a
-# print(solver.check_values(33))
-solver.search()
+    solver = sudoku_solver(p)
+    print(solver.puzzle_array)
+    print(solver.init_values)
+
+    # solver.puzzle_array = a
+    # print(solver.check_values(33))
+    solver.search()
+    print(solver.solution)

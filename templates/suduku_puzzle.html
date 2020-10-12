@@ -1,0 +1,153 @@
+<!DOCTYPE html5>
+<html5>
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<style>
+table { border-collapse: collapse; font-family: Calibri, sans-serif; }
+colgroup, tbody { border: solid medium; }
+td { border: solid thin; height: 2.8em; width: 10em; text-align: center; padding: 0; }
+#puzzle{ margin: auto; width:75%;}
+
+.cell_text{
+  color:black;
+}
+
+.dropbtn {
+  width:100%;
+  height:100%;
+  margin: auto;
+  border: none;
+}
+
+.dropbtn_init{
+  width:100%;
+  height:100%;
+  margin: auto;
+  border: none;
+  background-color: #d9d4d4;
+}
+
+.dropdown {
+  width:100%;
+  height:100%;
+  margin: auto;
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content div {
+  color: black;
+  text-decoration: none;
+  display: block;
+}
+
+.show{
+  display: block;
+}
+
+.incorrect_value_background{
+  background-color: #F08080;
+}
+
+
+.dropdown-content div:hover {background-color: #ddd;}
+/* .dropdown:hover .dropdown-content {display: block;} */
+/* .dropdown:hover .dropbtn {background-color: #3e8e41;} */
+</style>
+
+
+<div id="puzzle">
+<table>
+  <caption>Sudoku of the day</caption>
+  <colgroup><col><col><col>
+  <colgroup><col><col><col>
+  <colgroup><col><col><col>
+
+  {% for i in range(0,3) %}
+  <tbody>
+    {% for j in range(0,3) %}
+      <tr> {% for x in range(27*i + 9*j, 27*i+9*(j+1)) %}
+        {% if x in solver.init_values.keys() %}
+         <td> <div class="dropdown" id="dropdown_cell_{{x}}">
+                <button onclick="" id="dropbtn{{x}}" class="dropbtn_init">
+                   <div id="cell_{{x}}" class="cell_text">{{solver.init_values[x]}}</div>
+                </button>
+               </div>
+          {% else %}
+          <td> <div class="dropdown" id="dropdown_cell_{{x}}">
+                  <button onclick="setNumber({{x}})" id="dropbtn{{x}}" class="dropbtn">
+                    <div id="cell_{{x}}" class="cell_text"></div>
+                  </button>
+                  <div class="dropdown-content" id="dropdown{{x}}">
+                    {% for y in range(1,10) %}
+                    <div>{{y}}</div>
+                    {% endfor %}
+                  </div>
+                </div>
+          {% endif %}
+         {% endfor %}
+    {% endfor %}
+  {% endfor %}
+</table>
+</div>
+
+<button onclick="check_solution()" id="check_solution">
+Check Solution!
+</button>
+
+
+<script>
+function setNumber(id){
+  document.getElementById("dropdown" + id).classList.toggle("show");
+
+  for(var i=0; i<81; i++){
+    if(i != id && document.getElementById("dropdown" + i).classList.contains("show")){
+      var element = document.getElementById("dropdown" + i);
+      element.classList.toggle("show");
+    }
+  }
+}
+
+for(let i = 0; i<81; i++){
+  $(function (){
+    $(`#dropdown${i} div`).click(function(){
+      var selText = $(this).text();
+      var num = parseInt(selText);
+
+      //get solution value
+      var solution = {{solver.solution}}
+      var solutionVal = solution[i];
+
+
+      //set background
+      if(num != solutionVal){
+        if(!document.getElementById(`dropbtn${i}`).classList.contains("incorrect_value_background")){
+          document.getElementById(`dropbtn${i}`).classList.toggle("incorrect_value_background");
+        }
+      }
+
+      else if(document.getElementById(`dropbtn${i}`).classList.contains("incorrect_value_background")){
+        document.getElementById(`dropbtn${i}`).classList.toggle("incorrect_value_background");
+      }
+
+      document.getElementById(`cell_${i}`).innerHTML = num;
+      document.getElementById(`dropdown${i}`).classList.toggle("show");
+    });
+  });
+}
+</script>
+
+
+</html5>
