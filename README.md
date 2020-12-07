@@ -1,4 +1,4 @@
 # Suduku
 
 ## App
-https://github.com/Joseph-Maulin/Suduku
+https://sudoku-jm.herokuapp.com/
