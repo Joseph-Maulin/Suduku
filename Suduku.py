@@ -1,7 +1,7 @@
 import sys
 
 
-class sudoku_solver:
+class suduku_solver:
     def __init__(self, puzzle):
         self.cell_cache = {}
         self.init_values = {}
@@ -154,7 +154,7 @@ if __name__ == "__main__":
 
 
 
-    solver = sudoku_solver(p)
+    solver = suduku_solver(p)
     print(solver.puzzle_array)
     print(solver.init_values)
 
