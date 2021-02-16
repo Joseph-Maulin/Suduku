@@ -127,7 +127,17 @@ td { border: solid thin; height: 2.8em; width: 10em; text-align: center; padding
   width:100%;
   height:5%;
   bottom:0px;
-}
+
+#github-image{
+  margin:15px;
+  height:50px;
+  width:100px;
+  }
+
+#github-image:hover{
+  height:55px;
+  width:103px;
+  }
 </style>
 
 <div id="overlay"></div>
@@ -170,6 +180,14 @@ td { border: solid thin; height: 2.8em; width: 10em; text-align: center; padding
 <button onclick="check_solution()" id="check_solution">
 Check Solution!
 </button>
+<br/>
+<button onclick="solve_puzzle()" id="solve_puzzle">
+Solve Puzzle!
+</button>
+</br>
+<div class="github">
+      <a href="https://github.com/Joseph-Maulin/Suduku" target="_blank"><img id="github-image" src="static/github-image.png"></a>
+</div>
 
 <div class="success_banner_container visible" id="success_banner">
   <div class="success_banner_top_line"></div>
@@ -195,6 +213,23 @@ function check_solution(){
       document.getElementById("overlay").style.display = "block";
       document.getElementById("success_banner").classList.toggle("visible");
   }
+}
+
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+
+async function solve_puzzle(){
+  var solution = {{solver.solution}};
+  for(let i=0; i<81; i++){
+    var value = solution[i];
+    document.getElementById(`cell_${i}`).innerHTML = value;
+    await sleep(250);
+  }
+  await sleep(5000);
+  check_solution();
 }
 
 function setNumber(id){
