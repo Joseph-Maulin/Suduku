@@ -1,12 +1,12 @@
+# App - SUDUKU PUZZL IN ACTION!
+https://sudoku-jm.herokuapp.com/
+
 # Suduku
 A suduku puzzle solver and web interface.
 
 
 # Introduction
 This is a web app Sukuku puzzle. It is a heroku hosted flask app using Python, Flask, and JQuery. Click the app below to view..
-
-# App
-https://sudoku-jm.herokuapp.com/
 
 # What is here?
 
