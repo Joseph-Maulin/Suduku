@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from Suduku import suduku_solver
+from Sudoku import sudoku_solver
 
 
 
@@ -20,10 +20,10 @@ def puzzle_display():
     350000006
     """
 
-    solver = suduku_solver(p)
+    solver = sudoku_solver(p)
     solver.search()
 
-    return render_template("suduku_puzzle.html", solver=solver)
+    return render_template("sudoku_puzzle.html", solver=solver)
 
 
 
