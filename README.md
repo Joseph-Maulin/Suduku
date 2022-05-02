@@ -1,4 +1,4 @@
-# App - SUDOKU PUZZL IN ACTION!
+# App - SUDOKU PUZZLE IN ACTION!
 https://sudoku-jm.herokuapp.com/
 
 # Sudoku
